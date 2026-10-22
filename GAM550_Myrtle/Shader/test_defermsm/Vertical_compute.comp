@@ -1,0 +1,43 @@
+#version 430
+layout(local_size_x = 1, local_size_y = 128, local_size_z = 1) in;
+
+layout(std140, binding = 0) uniform blurKernal {
+    float weights[101];
+};
+uniform int blurWidth;
+
+layout(rgba32f) readonly uniform image2D blurredShadowMap;
+layout(rgba32f) writeonly uniform image2D finalShadowMap;
+
+shared vec4 v[229];
+
+void main() 
+{
+    ivec2 gpos = ivec2(gl_GlobalInvocationID.xy);
+
+    ivec2 size = imageSize(blurredShadowMap);
+
+    if (weights[0] == 0) {
+        imageStore(finalShadowMap, gpos, vec4(1, 0, 0, 1));
+        return;
+    }
+
+    uint Ipos = gl_LocalInvocationID.y;
+    v[Ipos] = imageLoad(blurredShadowMap, gpos + ivec2(0, -blurWidth));
+    if (Ipos < (2 * blurWidth)) {
+        v[Ipos + 128] = imageLoad(blurredShadowMap, gpos + ivec2(0, 2 * blurWidth));
+    }
+    barrier();
+
+    vec4 result = vec4(0.0);
+
+    for (int i = -blurWidth; i <= blurWidth; i++) {
+        ivec2 p = gpos + ivec2(0, i);
+        p.y = clamp(p.y, 0, size.y - 1);
+
+        vec4 Sample_ = imageLoad(blurredShadowMap, p);
+        result += Sample_ * weights[i + blurWidth];
+    }
+
+    imageStore(finalShadowMap, gpos, result);
+}

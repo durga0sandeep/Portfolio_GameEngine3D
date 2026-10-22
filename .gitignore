@@ -1,0 +1,72 @@
+﻿# Visual Studio build files
+*.tlog
+*.log
+*.idb
+*.ilk
+*.pdb
+*.Build.CppClean.log
+
+# Visual Studio configuration
+/.vs/
+*.vcxproj.user
+*.user
+*.suo
+
+# Build directories
+/build/
+/x64/
+**/x64/Debug/
+GAM550_Myrtle/x64/
+
+# Debug directories
+/Debug/
+GAM550_Myrtle/Debug/
+external/Debug/
+
+# Compiled files
+*.slo
+*.lo
+*.o
+*.gch
+*.pch
+*.dll
+*.exe
+*.out
+*.app
+*.dwo
+
+# Compiled object files - ONLY in specific directories
+GAM550_Myrtle/Source/**/*.obj
+GAM550_Myrtle/Components/**/*.obj
+GAM550_Myrtle/Engine/**/*.obj
+GAM550_Myrtle/x64/**/*.obj
+external/**/*.obj
+# But DO NOT ignore GAM550_Myrtle/Game/Assets/Models/**/*.obj (by not listing it above)
+
+# Static/Dynamic libraries
+*.lai
+*.la
+*.a
+*.lib
+*.so
+*.dylib
+
+# Fortran module files
+*.mod
+*.smod
+
+# Prerequisites
+*.d
+
+# Documentation
+*Docs
+*.lastbuildstate
+
+# Experimental
+/experimental/
+
+# User contributions
+/user-contributions/
+
+# External specific
+external/assimp/debug/bin/assimp-vc143-mtd.pdb

@@ -1,0 +1,4 @@
+﻿#pragma once
+
+enum renderPassState { BASE, DEFERRED, SHADOW, REFFLECTION, TRANSLUCENCY ,SKYDOME, SKELETON};
+

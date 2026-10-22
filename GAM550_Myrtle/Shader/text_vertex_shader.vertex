@@ -1,0 +1,23 @@
+#version 330 core
+layout (location = 0) in vec2 aPos;
+
+uniform vec2 position;
+uniform vec2 size;
+uniform vec2 screenSize;
+
+out vec2 TexCoord;
+
+void main()
+{
+    // Convert local quad space to screen space
+    vec2 pixelPos = aPos * size + position;
+
+    // Flip Y if screen origin is top-left
+    pixelPos.y = screenSize.y - pixelPos.y;
+
+    // Convert to Normalized Device Coordinates (NDC)
+    vec2 ndcPos = (pixelPos / screenSize) * 2.0 - 1.0;
+
+    gl_Position = vec4(ndcPos, 0.0, 1.0);
+    TexCoord = aPos;
+}
